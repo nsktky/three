@@ -3,7 +3,7 @@ import { OrbitControls } from "./jsm/controls/OrbitControls.js";
 
 let scene, camera, renderer, pointLight, controls;
 
-window.addEventListener("load", init)
+window.addEventListener("load", init);
 
 function init() {
   scene = new THREE.Scene();
@@ -46,10 +46,10 @@ function init() {
 }
 
 function onWindowResize() {
-    renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(window.innerWidth, window.innerHeight);
 
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
 }
 
 function animate() {
