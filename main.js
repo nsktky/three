@@ -20,18 +20,44 @@ function init() {
   renderer.setPixelRatio(window.devicePixelRatio);
   document.body.appendChild(renderer.domElement);
 
-  let textures = new THREE.TextureLoader().load("./textures/20220907-2.png");
+  let boxGeometry = new  THREE.BoxGeometry(100,100,100);
+  let sphereGeometry = new THREE.SphereGeometry(60,32,16);
+  let planeGeometry = new THREE.PlaneGeometry(400,400);
+  let torusGeometry = new THREE.TorusGeometry(10,5,10, 30, Math.PI*2);
+  let material = new THREE.MeshNormalMaterial({
+    // wireframe: true
+  });
 
-  let ballGeometry = new THREE.SphereGeometry(100, 64, 32);
-  let ballMaterial = new THREE.MeshPhysicalMaterial({ map: textures });
-  let ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
-  scene.add(ballMesh);
+  const count = 50
+  const bufferGeometry = new THREE.BufferGeometry();
+  const positionArray = new Float32Array(9*count);
 
-  let directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+
+  for(let i = 0; i<count*9; i++){
+    positionArray[i] = Math.random(-100,100)
+  }
+
+  const positionAttribute = new THREE.BufferAttribute(positionArray, 3);
+  bufferGeometry.setAttribute("position", positionAttribute);
+
+  let box = new THREE.Mesh(boxGeometry, material);
+  let sphere = new THREE.Mesh(sphereGeometry, material);
+  let plane = new THREE.Mesh(planeGeometry, material)
+  let torus = new THREE.Mesh(torusGeometry, material)
+  let buffer = new THREE.Mesh(bufferGeometry, material)
+
+  box.position.x = -100;
+  sphere.position.x = 100;
+  plane.rotation.x = Math.PI * -0.5
+  plane.position.y = -50
+  scene.add(box, sphere, plane, torus, buffer)
+
+
+  let directionalLight = new THREE.DirectionalLight(0xffffff, 3);
   directionalLight.position.set(1, 1, 1);
   scene.add(directionalLight);
 
-  pointLight = new THREE.PointLight(0xffffff, 1);
+  pointLight = new THREE.PointLight(0xffffff, 4);
   pointLight.position.set(-200, -200, -200);
   scene.add(pointLight);
 
